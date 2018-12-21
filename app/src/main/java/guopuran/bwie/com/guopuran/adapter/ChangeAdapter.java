@@ -19,7 +19,7 @@ import guopuran.bwie.com.guopuran.bean.ChangeBean;
 import guopuran.bwie.com.guopuran.bean.ZiBean;
 
 public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.ViewHolder> {
-    private List<ZiBean> list=new ArrayList<>();
+    private List<ChangeBean.DataBean.ListBean> list=new ArrayList<>();
     private Context context;
     private boolean flag;
     private final int COUNT_LIN=0;
@@ -29,15 +29,15 @@ public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.ViewHolder
         this.flag = flag;
     }
 
-    public List<ZiBean> getList() {
+    public List<ChangeBean.DataBean.ListBean> getList() {
         return list;
     }
 
-    public void setList(List<ZiBean> list) {
+    public void setList(List<ChangeBean.DataBean.ListBean> list) {
         this.list = list;
         notifyDataSetChanged();
     }
-    public ZiBean getItem(int position){
+    public ChangeBean.DataBean.ListBean getItem(int position){
         return list.get(position);
     }
 
@@ -81,18 +81,16 @@ public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.ViewHolder
             price=itemView.findViewById(R.id.change_price);
         }
 
-        public void getdata(final ZiBean item, Context context, final int i) {
-           /* String images_url = item.getImages().split("\\|")[0].replace("https", "http");
+        public void getdata(final ChangeBean.DataBean.ListBean item, Context context, final int i) {
+           final String images_url = item.getImages().split("\\|")[0].replace("https", "http");
             Glide.with(context).load(images_url).into(imageView);
             title.setText(item.getTitle());
-            price.setText("优惠价:"+item.getPrice());*/
-           imageView.setImageResource(item.getCc());
-           title.setText(item.getText1());
-           price.setText(item.getText2());
+            price.setText("优惠价:"+item.getPrice());
+
            itemView.setOnLongClickListener(new View.OnLongClickListener() {
                @Override
                public boolean onLongClick(View v) {
-                   monLongClick.onlongclick(item.getCc());
+                   monLongClick.onlongclick(images_url);
                    return true;
                }
            });
@@ -103,6 +101,6 @@ public class ChangeAdapter extends RecyclerView.Adapter<ChangeAdapter.ViewHolder
         this.monLongClick=monLongClick;
     }
     public interface onLongClick{
-        void onlongclick(int position);
+        void onlongclick(String url);
     }
 }

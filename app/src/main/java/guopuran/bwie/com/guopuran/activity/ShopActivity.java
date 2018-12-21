@@ -58,13 +58,13 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         button_change.setOnClickListener(this);
         initJiu();
         initData();
-       // mIpresenterImpl.requestter(Apis.URL_CHANGE,new HashMap<String, String>(),ChangeBean.class);
+        mIpresenterImpl.requestter(Apis.URL_CHANGE,new HashMap<String, String>(),ChangeBean.class);
         List<ZiBean> list=new ArrayList<>();
         for (int i=0;i<20;i++){
             ZiBean bean=new ZiBean(R.mipmap.ic_launcher,"数据"+i,"价格"+i);
             list.add(bean);
         }
-        changeAdapter.setList(list);
+        //changeAdapter.setList(list);
     }
 
     //九宫格
@@ -87,7 +87,7 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(ShopActivity.this,ZxingActivity.class));
                 break;
             case R.id.shop_change:
-                List<ZiBean> list = changeAdapter.getList();
+                List<ChangeBean.DataBean.ListBean> list = changeAdapter.getList();
                 initData();
                 changeAdapter.setList(list);
                 break;
@@ -105,8 +105,8 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
         change_recy.setAdapter(changeAdapter);
         changeAdapter.setonLongClick(new ChangeAdapter.onLongClick() {
             @Override
-            public void onlongclick(int position) {
-                Toast.makeText(ShopActivity.this, position+"", Toast.LENGTH_SHORT).show();
+            public void onlongclick(String url) {
+                Toast.makeText(ShopActivity.this, url, Toast.LENGTH_SHORT).show();
             }
         });
         flag=!flag;
@@ -143,9 +143,10 @@ public class ShopActivity extends AppCompatActivity implements View.OnClickListe
             JiuBean bean= (JiuBean) object;
             jiuAdapter.setList(bean.getData());
         }
-        /*if (object instanceof  ChangeBean){
+        if (object instanceof  ChangeBean){
             ChangeBean bean= (ChangeBean) object;
-            changeAdapter.setList(bean.getData());
-        }*/
+            List<ChangeBean.DataBean.ListBean> list = bean.getData().get(1).getList();
+            changeAdapter.setList(list);
+        }
     }
 }
